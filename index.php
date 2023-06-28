@@ -16,7 +16,7 @@
     <input type="password" name="client_password" >
     <br/><br/>
     <input type="submit" value="Iniciar sesión">
-    ¿No tienes cuenta? <a href="client/signup.php">Regístrate</a>
+    ¿No tienes cuenta? <a href="register/signup.php">Regístrate</a>
   </form>
   
   <br>
