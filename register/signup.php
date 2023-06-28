@@ -1,5 +1,4 @@
 <?php include('templates/header.html')?>
-<?php include('config/conexion.php')?>
 <?php #no tocar, lo estoy modificando (Diego)?>
 
 <body>
@@ -12,10 +11,14 @@
 
   <form align="center"  method="post">
     <input type="text" name="new_client_name" placeholder="Nombre de Usuario">
-    <br/><br/>
     <input type="password" name="new_client_password" placeholder="Contraseña">
     <br/><br/>
-    <input type="submit" value="Registrarte">  <a href="index.php">Cancelar</a>
+    <input type="text" name="new_client_rut" placeholder="RUT: 22.333.444-5">
+    <input type="text" name="new_client_calle" placeholder="Calle: Los Laurales">
+    <br/><br/>
+    <input type="number" min="0" name="new_client_numero" placeholder="Número: 2134">
+    <br/><br/>
+    <input type="submit" value="Registrarte">  <a href='../index.php'>Cancelar</a>
   <br>
   <br>
   <br>
