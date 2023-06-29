@@ -5,11 +5,11 @@
   <br>
   <br>
   <br>
-  <h1 align="center">Registrate</h1>
+  <h1 align="center">Regístrate</h1>
 
   <br>
 
-  <form align="center"  method="post">
+  <form align="center" method="post">
     <input type="text" name="new_client_name" placeholder="Nombre de Usuario">
     <input type="password" name="new_client_password" placeholder="Contraseña">
     <br/><br/>
@@ -18,10 +18,8 @@
     <br/><br/>
     <input type="number" min="0" name="new_client_numero" placeholder="Número: 2134">
     <br/><br/>
-    <input type="submit" value="Registrarte">  <a href='../index.php'>Cancelar</a>
-  <br>
-  <br>
-  <br>
+    <input type="submit" name = 'register' value="Registrarte">  <a href='../index.php'>Cancelar</a>
+
   <?php
   include('register.php')
   ?>
