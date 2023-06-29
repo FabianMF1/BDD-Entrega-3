@@ -34,13 +34,13 @@ $users = $usersResult -> fetchAll();
 </table>
 
 
-<h1>Prueba 1: consulta para encontrar los datos del user de id 101</h1>
-<p>intento: 11</p>
+<h1>Prueba 1: consulta para encontrar los datos del user de nombre Peter Roberts</h1>
+<p>intento: 12</p>
 <?php
 require("../config/conexion.php");
 #Primero veremos si podemos filtrar un usuario según su nombre
 $user_name = "Peter Roberts";
-$userQuery = "SELECT * FROM cliente WHERE id_cliente IS 101;";
+$userQuery = "SELECT * FROM cliente WHERE nombre LIKE '%$user_name%';";
 $userResult = $db1 -> prepare($userQuery);
 $userResult -> execute();
 $users = $userResult -> fetchAll();
