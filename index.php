@@ -1,48 +1,25 @@
 <?php include('templates/header.html')?>
-
 <body>
-  <h1 align="center">Muebles g108+144</h1>
-  <p style="text-align:center;">Inicia Sesión o continúa como invitado</p>
-
+  <h1 align="center">Muebles</h1>
+  <p style="text-align:center;">Inicia Sesión o continúa como Invitado</p>
   <br>
+  <h2 class = "subtitle"  align="center">Iniciar Sesión</h2>
 
-  <h3 align="center">Iniciar sesión como Cliente</h3>
-
-  <form align="center" action="client/menu.php" method="post">
-    Nombre de usuario:
-    <input type="text" name="client_name">
+  <form align="center" method="post">
+    <input type="text" name="new_client_name" placeholder="Nombre de Usuario">
+    <input type="password" name="new_client_password" placeholder="Contraseña">
     <br/><br/>
-    Contraseña:
-    <input type="password" name="client_password" >
+    <input type="submit" name = 'log_in' value="Iniciar Sesión"> 
     <br/><br/>
-    <input type="submit" value="Iniciar sesión">
-    ¿No tienes cuenta? <a href="register/signup.php">Regístrate</a>
+    <input type="submit" name = 'import' value="Importar Usuarios">
   </form>
-  
-  <br>
-  <br>
-  <br>
 
-  <h3 align="center">Iniciar sesión como Administrador</h3>
-
-  <form align="center" action="admin/menu.php" method="post">
-    Nombre de Admin:
-    <input type="text" name="admin_name">
-    <br/><br/>
-    Contraseña:
-    <input type="password" name="admin_password" >
-    <br/><br/>
-    <input type="submit" value="Iniciar sesión">
-  </form>
-  
-  <br>
+  <?php
+  include('validation.php')
+  ?>
   <br>
   <br>
 
   <a href="guest/menu.php">Continúa como invitado</a>
 
-
-  
-
 </body>
-</html>
