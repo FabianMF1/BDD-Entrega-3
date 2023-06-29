@@ -1,50 +1,54 @@
-<?php include('../templates/header.html');   ?>
+<?php include('../templates/header.html'); ?>
 
 <body>
 
-<h1>Prueba 1: consulta para encontrar los datos del user de nombre Jeffrey Stevens</h1>
-<p>intento: 4</p>
-<?php
-require("../config/conexion.php");
-#Primero veremos si podemos filtrar un usuario según su nombre
-$user_name = "Jeffrey Stevens";
-$userQuery = "SELECT c.nombre, c.rut, c.calle, c.num_domicilio, c.comuna, c.region, c.id_cliente
-    FROM cliente c
-    WHERE c.nombre IS $user_name;";
-$userResult = $db -> prepare($userQuery);
-$userResult -> execute();
-$users = $userResult -> fetchAll();
-?>
-
-<?php
-foreach ($users as $u) {
-    echo "<h3>Revisa tus datos:</h3>
-    <p>RUT: $user[1]</p>
-    <p>Dirección: $user[5], $user[4], $user[2] #$user[3]</p>
-    <p>User ID: $user[6]</p>";
-}
-?>
-
-<h1>Prueba 2: consulta para encontrar los datos del user de id 164</h1>
+<h1>Prueba 0: consulta para todos los datos de los 10 primeros clientes</h1>
 <p>intento: 1</p>
 <?php
 require("../config/conexion.php");
+$usersQuery = "SELECT * FROM cliente ORDER BY id_cliente LIMIT 10;";
+$usersResult = $db1 -> prepare($usersQuery);
+$usersResult -> execute();
+$users = $usersResult -> fetchAll();
+?>
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Contraseña</th>
+            <th>RUT</th>
+            <th>Calle</th>
+            <th>Número</th>
+            <th>Comuna</th>
+            <th>Región</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($users as $u) {
+            echo "<tr><td>$u[0]</td><td>$u[1]</td><td>$u[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td><td>$u[6]</td><td>$u[7]</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+
+<h1>Prueba 1: consulta para encontrar los datos del user de id 101</h1>
+<p>intento: 11</p>
+<?php
+require("../config/conexion.php");
 #Primero veremos si podemos filtrar un usuario según su nombre
-$user_id = 164;
-$userQuery = "SELECT c.nombre, c.rut, c.calle, c.num_domicilio, c.comuna, c.region, c.id_cliente
-    FROM cliente c
-    WHERE c.id_cliente IS $user_id;";
-$userResult = $db -> prepare($userQuery);
+$user_name = "Peter Roberts";
+$userQuery = "SELECT * FROM cliente WHERE id_cliente IS 101;";
+$userResult = $db1 -> prepare($userQuery);
 $userResult -> execute();
 $users = $userResult -> fetchAll();
 ?>
 
 <?php
 foreach ($users as $u) {
-    echo "<h3>Revisa tus datos:</h3>
-    <p>RUT: $user[1]</p>
-    <p>Dirección: $user[5], $user[4], $user[2] #$user[3]</p>
-    <p>User ID: $user[6]</p>";
+    echo "<h3>Revisa tus datos:</h3><p>RUT: $u[3]</p><p>Dirección: $u[7], $u[6], $u[4] $u[5]</p><p>User ID: $u[0]</p>";
 }
 ?>
 
