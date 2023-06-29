@@ -16,7 +16,6 @@ $users = $usersResult -> fetchAll();
         <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Contraseña</th>
             <th>RUT</th>
             <th>Calle</th>
             <th>Número</th>
@@ -27,7 +26,7 @@ $users = $usersResult -> fetchAll();
     <tbody>
         <?php
         foreach ($users as $u) {
-            echo "<tr><td>$u[0]</td><td>$u[1]</td><td>$u[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td><td>$u[6]</td><td>$u[7]</td></tr>";
+            echo "<tr><td>$u[0]</td><td>$u[1]</td><td>$u[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td><td>$u[6]</td></tr>";
         }
         ?>
     </tbody>
@@ -48,9 +47,89 @@ $users = $userResult -> fetchAll();
 
 <?php
 foreach ($users as $u) {
-    echo "<h3>Revisa tus datos:</h3><p>RUT: $u[3]</p><p>Dirección: $u[7], $u[6], $u[4] $u[5]</p><p>User ID: $u[0]</p>";
+    echo "<h3>Revisa tus datos $u[1]:</h3><p>RUT: $u[2]</p><p>Dirección: $u[6], $u[5], $u[3] $u[4]</p><p>User ID: $u[0]</p>";
 }
 ?>
+
+<h1>Prueba 2: consulta para encontrar los datos del user de nombre Robert Bridge</h1>
+<p>intento: 1</p>
+<?php
+require("../config/conexion.php");
+#Primero veremos si podemos filtrar un usuario según su nombre
+$user_name = "Robert Bridge";
+$userQuery = "SELECT * FROM cliente WHERE nombre LIKE '%$user_name%';";
+$userResult = $db1 -> prepare($userQuery);
+$userResult -> execute();
+$users = $userResult -> fetchAll();
+?>
+
+<?php
+foreach ($users as $u) {
+    echo "<h3>Revisa tus datos $u[1]:</h3><p>RUT: $u[2]</p><p>Dirección: $u[6], $u[5], $u[3] $u[4]</p><p>User ID: $u[0]</p>";
+}
+?>
+
+<h1>Prueba 3: consulta para encontrar todas las compras</h1>
+<p>intento: 1</p>
+<?php
+require("../config/conexion.php");
+$purchaseQuery = "SELECT id_compra, fecha, id_producto, id_cliente, id_tienda, cantidad FROM compra ORDER BY id_compra LIMIT 10;";
+$purchaseResult = $db1 -> prepare($purchaseQuery);
+$purchaseResult -> execute();
+$purchases = $purchaseResult -> fetchAll();
+?>
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>ID Producto</th>
+            <th>ID Cliente</th>
+            <th>ID Tienda</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($purchases as $p) {
+            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+<h1>Prueba 4: consulta para encontrar todas las compras de Robert Bridge</h1>
+<p>intento: 1</p>
+<?php
+require("../config/conexion.php");
+$user_name = "Robert Bridge";
+$purchaseQuery = "SELECT * FROM compra WHERE id_cliente LIKE '%$user_name%' ORDER BY id_compra LIMIT 10;";
+$purchaseResult = $db1 -> prepare($purchaseQuery);
+$purchaseResult -> execute();
+$purchases = $purchaseResult -> fetchAll();
+?>
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>ID Producto</th>
+            <th>ID Cliente</th>
+            <th>ID Tienda</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($purchases as $p) {
+            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
 
 </body>
 
