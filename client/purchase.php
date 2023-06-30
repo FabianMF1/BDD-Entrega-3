@@ -17,6 +17,10 @@ $purchaseResult -> execute();
 $purchases = $purchaseResult -> fetchAll();
 ?>
 
+<?php
+echo "<p>Usted está revisando la compra de ID $purchase_id</p>";
+?>
+
 <table class='table'>
     <thead>
         <tr>

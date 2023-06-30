@@ -52,7 +52,7 @@ $purchases = $purchaseResult -> fetchAll();
 <br>
 
 <h3>¿Quieres revisar alguna de tus compras?</h3>
-<form align="center" action="client/purchase.php" method="post">
+<form align="center" action="./purchase.php" method="post">
   Id de la compra:
   <input type="text" name="purchase_id">
   <br/><br/>
