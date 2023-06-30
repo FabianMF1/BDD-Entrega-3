@@ -99,7 +99,40 @@ $purchases = $purchaseResult -> fetchAll();
     </tbody>
 </table>
 
-<h1>Prueba 4: consulta para encontrar todas las compras de Peter Roberts</h1>
+<h1>Prueba 4: consulta para encontrar todas las compras del id 101</h1>
+<p>intento: 3</p>
+<?php
+require("../config/conexion.php");
+$user_id = 101;
+$purchaseQuery = "SELECT * FROM compra WHERE id_cliente = $user_id ORDER BY id_compra;";
+$purchaseResult = $db1 -> prepare($purchaseQuery);
+$purchaseResult -> execute();
+$purchases = $purchaseResult -> fetchAll();
+?>
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>ID Producto</th>
+            <th>ID Cliente</th>
+            <th>ID Tienda</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        foreach ($purchases as $p) {
+            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$p[3]</td><td>$p[4]</td><td>$p[5]</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+
+
+<h1>Prueba 5: consulta para encontrar todas las compras de Peter Roberts</h1>
 <p>intento: 1</p>
 <?php
 require("../config/conexion.php");
