@@ -2,15 +2,24 @@
 
 <body>
   <p style="text-align:center;">Bienvenido Administrador</p>
-  <h1 align="center">Seleccione una región</h1>
-
-  <br>
-
-  <form align="center" action="admin/shops.php" method="post">
-    Región de la tienda:
-    <input type="text" name="shop_region">
-  </form>
-  
-  <br>
+  <div class='container'>
+        <?php
+        require("../config/conexion.php");
+        // Consulta SQL para obtener los nombres de la tabla Regiones
+        $query = "SELECT DISTINCT region FROM relacion_comunaregion";
+        $result = $db2->prepare($query);
+        $result->execute();
+        $regiones = $result->fetchAll(PDO::FETCH_COLUMN); ?>
+            <h3>Seleccionar Región</h3>
+            <form action='./shops.php' method='POST'>
+                <select name='region'>
+                    <?php foreach ($regiones as $region) { ?>
+                        <option value='<?php echo $region; ?>'><?php echo $region; ?></option>
+                    <?php } ?>
+                </select>
+                <input class='btn' type='submit' value='Consultar'>
+            </form>
+        </div>
+        <?php include('../templates/footer.html'); ?>
   <br>
   <br>

@@ -1,42 +1,33 @@
-<?php include('../templates/header.html');   ?>
+<?php include('templates/header.html');?>
 
 <body>
+<div class="container">
 <?php
   #Llama a conexión, crea el objeto PDO y obtiene la variable $db
   require("../config/conexion.php");
 
   #Se obtiene el valor del input del usuario
-  $shop_region = $_POST["shop_region"];
-  $shop_region = intval($shop_region);
+  $shop_region = $_POST['region'];
 
   #Se construye la consulta como un string
- 	$query = "SELECT r.nombre_region, COUNT(DISTINCT s.id) AS cantidad_tiendas
-            FROM region r
-            INNER JOIN tienda s
-            ON r.id = s.id_region
-            GROUP BY r.id
-            WHERE r.nombre LIKE $shop_region
-            ORDER BY r.nombre ASC;";
+  $query = "SELECT Tiendas.idTienda
+  FROM Tiendas
+  JOIN relacion_comunaregion ON Tiendas.comuna = relacion_comunaregion.comuna
+  WHERE relacion_comunaregion.region = :shop_region";
 
-  #Se prepara y ejecuta la consulta. Se obtienen TODOS los resultados
-	$result = $db -> prepare($query);
-	$result -> execute();
-	$shops = $result -> fetchAll();
-  ?>
-
-  <table>
-    <tr>
-      <th>Región</th>
-      <th>Cantidad de Tiendas</th>
-    </tr>
-  
-      <?php
-        // echo $shops;
-        foreach ($shops as $s) {
-          echo "<tr><td>$s[0]</td><td>$s[1]</td></tr>";
-      }
-      ?>
-      
-  </table>
+  $result = $db2->prepare($query);
+  $result->bindParam(':shop_region', $shop_region);
+  $result->execute();
+  $shops = $result->fetchAll(PDO::FETCH_COLUMN); ?>
+    <h3>Seleccionar Id de Tienda</h3>
+    <form action='./categoria.php' method='POST'>
+        <select name='tienda'>
+            <?php foreach ($shops as $shop) { ?>
+                <option value='<?php echo $shop; ?>'><?php echo $shop; ?></option>
+            <?php } ?>
+        </select>
+        <input class='btn' type='submit' value='Consultar'>
+    </form>
+    </div>
 
 <?php include('../templates/footer.html'); ?>
