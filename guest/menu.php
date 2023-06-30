@@ -163,6 +163,38 @@ $purchases = $purchaseResult -> fetchAll();
     </tbody>
 </table>
 
+<h1>Prueba 6: consulta para encontrar items de compra de id 211</h1>
+<p>intento: 1</p>
+<?php
+require("../config/conexion.php");
+$purchase_id = 211;
+$purchaseQuery = "SELECT * FROM compra WHERE id_compra = $purchase_id;";
+$purchaseResult = $db1 -> prepare($purchaseQuery);
+$purchaseResult -> execute();
+$purchases = $purchaseResult -> fetchAll();
+?>
+
+<?php
+$total = 0;
+foreach ($purchases as $purchase) {
+    $pruductQuery = "SELECT * FROM producto WHERE id_producto = $purchase[2];";
+    $productResult = $db1 -> prepare($productQuery);
+    $productResult -> execute();
+    $products = $productResult -> fetchAll();
+    foreach ($products as $p) {
+        $total += $p[2] * $p[3];
+        $deliveryQuery = "SELECT * FROM despacho WHERE id_compra = $purchase[0];";
+        $deliveryResult = $db1 -> prepare($deliveryQuery);
+        $deliveryResult -> execute();
+        $deliveries = $deliveryResult -> fetchAll();
+        foreach ($deliveries as $d) {
+            # aquí falta un if que revise la fecha del despacho
+            echo "<h3>Producto: $p[1]</h3><p>ID Producto: $p[0]</p><p>Precio Unidad: $p[2]</p><p>Cantidad: $purchase[5]</p><p>Cajas: $p[3]</p><p>Precio Total: $p[2]*$p[3]</p><p>$d[2]</p>";    
+        }
+    }
+    echo "<h3>Total Compra: $total</h3>";
+}
+?>
 
 </body>
 
