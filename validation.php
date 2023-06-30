@@ -36,12 +36,19 @@ if (isset($_POST['log_in'])){
         $type_u = $usuario[0][2];
         $password_u = $usuario[0][3];
         if ($type_u == 'admin'){ #redireccionamos al menu de administrador
-            
+            session_start();
+            $_SESSION['user_id'] = $id_u;
+            $_SESSION['user_name'] = $name_u;
+
             header('Location: admin/menu.php');
             exit();
 
         }
         else{ #redireccionamos al menu de cliente
+            session_start();
+            $_SESSION['user_id'] = $id_u;
+            $_SESSION['user_name'] = $name_u;
+
             header('Location: client/menu.php');
             exit();
         }

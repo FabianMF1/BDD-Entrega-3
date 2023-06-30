@@ -4,6 +4,9 @@
 <h1>Client Menu</h1>
 <?php
 require("../config/conexion.php");
+session_start();  # esto recupera los valores de $_SESSION instanciados en index
+$a = $_SESSION['user_name']; # ejemplo de como designar una variable usando $_SESSION
+echo $a; #print
 $client_name = $_POST["client_name"];
 $client_name = intval($client_name);
 $user_name = "Robert Bridge";
