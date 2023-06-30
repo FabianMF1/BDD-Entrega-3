@@ -5,12 +5,9 @@
 <?php
 require("../config/conexion.php");
 session_start();  # esto recupera los valores de $_SESSION instanciados en index
-$a = $_SESSION['user_name']; # ejemplo de como designar una variable usando $_SESSION
-echo $a; #print
-$client_name = $_POST["client_name"];
-$client_name = intval($client_name);
-$user_name = "Robert Bridge";
-$userQuery = "SELECT * FROM cliente WHERE nombre LIKE '%$client_name%';";
+$client_name = $_SESSION['user_name']; # ejemplo de como designar una variable usando $_SESSION
+$client_id = $_SESSION['user_id'];
+$userQuery = "SELECT * FROM cliente WHERE id_cliente = $client_id;";
 $userResult = $db1 -> prepare($userQuery);
 $userResult -> execute();
 $users = $userResult -> fetchAll();
@@ -25,7 +22,7 @@ foreach ($users as $u) {
 
 <?php
 require("../config/conexion.php");
-$purchaseQuery = "SELECT * FROM compra c INNER JOIN (SELECT * FROM cliente WHERE nombre LIKE '%$client_name%') cl ON c.id_cliente = cl.id_cliente;";
+$purchaseQuery = "SELECT * FROM compra c WHERE id_cliente = $client_id;";
 $purchaseResult = $db1 -> prepare($purchaseQuery);
 $purchaseResult -> execute();
 $purchases = $purchaseResult -> fetchAll();
