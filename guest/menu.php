@@ -163,7 +163,49 @@ $purchases = $purchaseResult -> fetchAll();
     </tbody>
 </table>
 
-<h1>Prueba 6: consulta para encontrar items de compra de id 211</h1>
+<h1>Prueba 6: consulta para encontrar productos de compra de id 211</h1>
+<p>intento: 2</p>
+<?php
+require("../config/conexion.php");
+$purchase_id = 211;
+$purchaseQuery = "SELECT * FROM compra WHERE id_compra = $purchase_id;";
+$purchaseResult = $db1 -> prepare($purchaseQuery);
+$purchaseResult -> execute();
+$purchases = $purchaseResult -> fetchAll();
+?>
+
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID Prdoducto</th>
+            <th>Nombre</th>
+            <th>Nro Cajas</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total Producto</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $total = 0;
+        foreach ($purchases as $p) {
+            $productQuery = "SELECT * FROM producto WHERE id_producto = $p[2];";
+            $productResult = $db1 -> prepare($productQuery);
+            $productResult -> execute();
+            $products = $productResult -> fetchAll();
+            foreach ($products as $product) {
+                $total_prod = $product[2] * $p[5];
+                $total += $total_prod;
+                echo "<tr><td>$product[0]</td><td>$product[1]</td><td>$product[3]</td><td>$product[2]</td><td>$p[5]</td><td>$total_prod</td></tr>";
+            }
+        echo "<p>Total Compra: $total</p>";
+        }
+        ?>
+    </tbody>
+</table>
+
+<h1>Prueba 7: consulta para encontrar productos de compra de id 211 y su despacho</h1>
 <p>intento: 1</p>
 <?php
 require("../config/conexion.php");
@@ -174,27 +216,48 @@ $purchaseResult -> execute();
 $purchases = $purchaseResult -> fetchAll();
 ?>
 
-<?php
-$total = 0;
-foreach ($purchases as $purchase) {
-    $pruductQuery = "SELECT * FROM producto WHERE id_producto = $purchase[2];";
-    $productResult = $db1 -> prepare($productQuery);
-    $productResult -> execute();
-    $products = $productResult -> fetchAll();
-    foreach ($products as $p) {
-        $total += $p[2] * $p[3];
-        $deliveryQuery = "SELECT * FROM despacho WHERE id_compra = $purchase[0];";
-        $deliveryResult = $db1 -> prepare($deliveryQuery);
-        $deliveryResult -> execute();
-        $deliveries = $deliveryResult -> fetchAll();
-        foreach ($deliveries as $d) {
-            # aquí falta un if que revise la fecha del despacho
-            echo "<h3>Producto: $p[1]</h3><p>ID Producto: $p[0]</p><p>Precio Unidad: $p[2]</p><p>Cantidad: $purchase[5]</p><p>Cajas: $p[3]</p><p>Precio Total: $p[2]*$p[3]</p><p>$d[2]</p>";    
+
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID Prdoducto</th>
+            <th>Nombre</th>
+            <th>Nro Cajas</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total Producto</th>
+            <th>Despacho</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $total = 0;
+        foreach ($purchases as $p) {
+            $productQuery = "SELECT * FROM producto WHERE id_producto = $p[2];";
+            $productResult = $db1 -> prepare($productQuery);
+            $productResult -> execute();
+            $products = $productResult -> fetchAll();
+            foreach ($products as $product) {
+                $total_prod = $product[2] * $p[5];
+                $total += $total_prod;
+                $deliveryQuery = "SELECT * FROM despacho WHERE id_compra = $p[0];";
+                $deliveryResult = $db1 -> prepare($deliveryQuery);
+                $deliveryResult -> execute();
+                $deliveries = $deliveryResult -> fetchAll();
+                foreach ($deliveries as $delivery) {
+                    if ($delivery[2] == NULL) {
+                        echo "<tr><td>$product[0]</td><td>$product[1]</td><td>$product[3]</td><td>$product[2]</td><td>$p[5]</td><td>$total_prod</td><td>Retiro en Tienda</td></tr>";
+                    }
+                    else {
+                        echo "<tr><td>$product[0]</td><td>$product[1]</td><td>$product[3]</td><td>$product[2]</td><td>$p[5]</td><td>$total_prod</td><td>$delivery[2]</td></tr>";
+                    }
+                }
+            }
+        echo "<p>Total Compra: $total</p>";
         }
-    }
-    echo "<h3>Total Compra: $total</h3>";
-}
-?>
+        ?>
+    </tbody>
+</table>
 
 </body>
 

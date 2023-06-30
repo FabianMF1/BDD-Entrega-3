@@ -1,74 +1,63 @@
 <?php include('../templates/header.html');   ?>
 
 <body>
+<h1>Client Purchase<h1>
 <?php
-  #Llama a conexión, crea el objeto PDO y obtiene la variable $db
-  require("../config/conexion.php");
+require("../config/conexion.php");
+session_start();
+$client_name = $_SESSION['user_name'];
+$client_id = $_SESSION['user_id'];
 
-  #Se obtiene el valor del input del usuario
-  $purchase_id = $_POST["purchase_id"];
-  $purchase_id = intval($purchase_id);
+$purchase_id = $_POST["purchase_id"];
+$purchase_id = intval($purchase_id);
 
-  #Se construye la consulta como un string
- 	$query = "SELECT c.id c.name, c.value, c.phone_number, c.email
-            FROM compra c
-            WHERE c.id LIKE $purchase_id;";
+$purchaseQuery = "SELECT * FROM compra WHERE id_compra = $purchase_id;";
+$purchaseResult = $db1 -> prepare($purchaseQuery);
+$purchaseResult -> execute();
+$purchases = $purchaseResult -> fetchAll();
+?>
 
-  #Se prepara y ejecuta la consulta. Se obtienen TODOS los resultados
-	$result = $db -> prepare($query);
-	$result -> execute();
-	$purchase = $result -> fetchAll();
-  ?>
-    <?php 
-    "<h1>Hola $user[0]</h1>
-    <h3>Revisa tus datos:</h3>
-    <p>Email: $user[3]</p>
-    <p>Dirección: $user[1]</p>";
-    ?>
-
-    <?php
-    #Se construye la consulta como un string
- 	    $query = "SELECT c.id, c.name, c.direction, c.value
-            FROM compra c
-            INNER JOIN cliente cl
-            ON c.id_cliente = cl.id
-            WHERE c.name LIKE $client_name
-            ORDER BY c.id ASC;";
-
-    #Se prepara y ejecuta la consulta. Se obtienen TODOS los resultados
-	    $result = $db -> prepare($query);
-	    $result -> execute();
-	    $purhcases = $result -> fetchAll();
-    ?>
-
-
-  <table>
-    <tr>
-      <th>Id</th>
-      <th>Nombre Compra</th>
-      <th>Dirección Envío</th>
-      <th>Valor</th>
-    </tr>
-  
-      <?php
-        // echo $shops;
+<table class='table'>
+    <thead>
+        <tr>
+            <th>ID Prdoducto</th>
+            <th>Nombre</th>
+            <th>Nro Cajas</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total Producto</th>
+            <th>Despacho</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $total = 0;
         foreach ($purchases as $p) {
-          echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$p[3]</td></tr>";
-      }
-      ?>
-      
-  </table>
-
-    <br>
-    <br>
-    <br>
-    <h3>¿Quieres Revisar una de tus compras?</h3>
-  <form align="center" action="client/purchase.php" method="post">
-    Id de la compra:
-    <input type="text" name="purchase_id">
-    <br/><br/>
-    <input type="submit" value="Revisar Compra">
-  </form>
+            $productQuery = "SELECT * FROM producto WHERE id_producto = $p[2];";
+            $productResult = $db1 -> prepare($productQuery);
+            $productResult -> execute();
+            $products = $productResult -> fetchAll();
+            foreach ($products as $product) {
+                $total_prod = $product[2] * $p[5];
+                $total += $total_prod;
+                $deliveryQuery = "SELECT * FROM despacho WHERE id_compra = $p[0];";
+                $deliveryResult = $db1 -> prepare($deliveryQuery);
+                $deliveryResult -> execute();
+                $deliveries = $deliveryResult -> fetchAll();
+                foreach ($deliveries as $delivery) {
+                    if ($delivery[2] == NULL) {
+                        echo "<tr><td>$product[0]</td><td>$product[1]</td><td>$product[3]</td><td>$product[2]</td><td>$p[5]</td><td>$total_prod</td><td>Retiro en Tienda</td></tr>";
+                    }
+                    else {
+                        echo "<tr><td>$product[0]</td><td>$product[1]</td><td>$product[3]</td><td>$product[2]</td><td>$p[5]</td><td>$total_prod</td><td>$delivery[2]</td></tr>";
+                    }
+                }
+            }
+        echo "<p>Total Compra: $total</p>";
+        }
+        ?>
+    </tbody>
+</table>
 
 </body>
 
