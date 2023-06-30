@@ -3,6 +3,8 @@ Repo para la entrega 3
 
 # Entidades y atributos
 
+Tiendas(idTienda, telefono, calle, numero, comuna)
+
 Personal(IdPersonal, nombre, rut, edad, genero, fechaInicio, idTienda)
 
 Productos(idProducto, nombre, precio, numcajas, categoria)
