@@ -70,10 +70,10 @@ foreach ($users as $u) {
 ?>
 
 <h1>Prueba 3: consulta para encontrar todas las compras</h1>
-<p>intento: 1</p>
+<p>intento: 3</p>
 <?php
 require("../config/conexion.php");
-$purchaseQuery = "SELECT id_compra, fecha, id_producto, id_cliente, id_tienda, cantidad FROM compra ORDER BY id_compra LIMIT 10;";
+$purchaseQuery = "SELECT * FROM compra ORDER BY id_compra LIMIT 10;";
 $purchaseResult = $db1 -> prepare($purchaseQuery);
 $purchaseResult -> execute();
 $purchases = $purchaseResult -> fetchAll();
@@ -93,18 +93,18 @@ $purchases = $purchaseResult -> fetchAll();
     <tbody>
         <?php
         foreach ($purchases as $p) {
-            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td></tr>";
+            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$p[3]</td><td>$p[4]</td><td>$p[5]</td></tr>";
         }
         ?>
     </tbody>
 </table>
 
-<h1>Prueba 4: consulta para encontrar todas las compras de Robert Bridge</h1>
+<h1>Prueba 4: consulta para encontrar todas las compras de Peter Roberts</h1>
 <p>intento: 1</p>
 <?php
 require("../config/conexion.php");
-$user_name = "Robert Bridge";
-$purchaseQuery = "SELECT * FROM compra WHERE id_cliente LIKE '%$user_name%' ORDER BY id_compra LIMIT 10;";
+$user_name = "Peter Roberts";
+$purchaseQuery = "SELECT * FROM compra c INNER JOIN (SELECT * FROM cliente WHERE nombre LIKE '%$user_name%') cl ON c.id_cliente = cl.id_cliente;";
 $purchaseResult = $db1 -> prepare($purchaseQuery);
 $purchaseResult -> execute();
 $purchases = $purchaseResult -> fetchAll();
@@ -124,7 +124,7 @@ $purchases = $purchaseResult -> fetchAll();
     <tbody>
         <?php
         foreach ($purchases as $p) {
-            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$u[3]</td><td>$u[4]</td><td>$u[5]</td></tr>";
+            echo "<tr><td>$p[0]</td><td>$p[1]</td><td>$p[2]</td><td>$p[3]</td><td>$p[4]</td><td>$p[5]</td></tr>";
         }
         ?>
     </tbody>
