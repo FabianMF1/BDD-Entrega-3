@@ -1,39 +1,23 @@
-# BDD-Entrega-3
-Repo para la entrega 3
+# Servicio de entregas
 
-# Entidades y atributos
+_Esta es una pagina realizada en php conectada a las dos bases de datos que crearon durante el semestre ambos grupos. Se puden realizar una serie de cosas, partiendo por el login, se puede iniciar sesion como administrador o usuario, ademas de poder explorar la pagina como invitado. Un administrador es capaz de modificar el stock o la oferta de un producto de una tienda en especifico, accediendo a el mediante diversos dropdowns._
 
-Tiendas(idTienda, telefono, calle, numero, comuna)
+_En cuanto al usuario normal, este es capaz de consultar por sus compras realizadas e incluso puede realizar una compra nueva si asi lo desea, esto seleccionando una tienda y un producto especifico._
 
-Personal(IdPersonal, nombre, rut, edad, genero, fechaInicio, idTienda)
+## Comenzando 🚀
 
-Productos(idProducto, nombre, precio, numcajas, categoria)
+_La página web para el administrador es bastante intuitiva y fácil de usar. Básicamente al iniciar sesión como administrador, la página te permitirá modificar el stock y el descuento de un producto de tu elección. Lo primero que se visualiza al iniciar sesión es un menú desplegable con todas las regiones. Al seleccionar una región, la página te redirecciona a una pestaña en donde se visualiza un menú desplegable con las tiendas asentadas en dicha región. Al seleccionar un id de tienda, la página te redireccionará a otra pestaña en donde se muestra un menú desplegable con las categorías de productos presentes en la tienda seleccionada. Luego, al seleccionar una categoría, la página te enviará a una pestaña con un menú desplegable que muestra todos los productos de la categoría seleccionada en la tienda seleccionada. Finalmente, al seleccionar un producto, la página te redirecciona a una pestaña en donde hay dos inputs, uno para modificar stock (cantidad) y otro para modificar descuento (porcentaje). Se despliega la información del estado actual de cantidad y descuento y a medida que se van modificando, se muestran los cambios efectuados en tiempo real. Cabe destacar que el input es a prueba de errores, es decir, no se puede tener un stock negativo ni un descuento mayor al 100% o menor que 0%._
 
-Dormitorios(idProducto, tamano, color, descripcion)
+## Construido con 🛠️
 
-Iluminacion(idProducto, color, frecuencia, potencia, tension)
+_Para poder realizar este proyecto se utilizaron una serie de herramientas, entre las que se encuentran:_
 
-Living(idProducto, dimensiones, material, carga)
+* [Php](https://www.php.net/)
+* [Postgresql](https://www.postgresql.org/)
 
-Cajas(id, descripcion, peso, idProducto)
+## Autores ✒️
 
-Stock(idTienda, idProducto, cantidad, descuento)
-
-relacion_comunaregion(Comuna, region)
-
-jefes(idPersonal, idTienda)
-
-vehiculo(id_vehiculo, patente, cap_carga, can_personas)
-
-cliente(id_cliente, nombre, contrasena, rut, calle, num_domicilio, comuna, region)
-
-producto(id_producto, nombre, precio, nro_cajas, tipo, tamano, color, descripcion, dimensiones, material, carga, frecuencia, potencia, tension)
-
-caja(id_caja, id_producto, peso, descripcion)
-
-compra(id_compra, fecha, id_producto, id_cliente, id_tienda, cantidad)
-
-despacho(id_despacho, id_compra, fecha_entrega, id_vehiculo)
-
-reaprtidor(id_repartidor, nombre, rut, edad, genero, id_vehiculo, es_chofer)
-
+* **Diego Garcés** - [RadiosMark](https://github.com/RadiosMark)
+* **Eduardo Abud** - [piriabud](https://github.com/piriabud)
+* **Benjamín Thompson** - [bthompsonl](https://github.com/bthompsonl)
+* **Fabian Mendoza** - [FabianMF1](https://github.com/FabianMF1)
